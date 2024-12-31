@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import mongoose from "mongoose";
+import autopopulate from "mongoose-autopopulate";
 
 const livroSchema = new mongoose.Schema(
   {
@@ -11,7 +13,8 @@ const livroSchema = new mongoose.Schema(
       // exemplo de autor como atributo
       type: mongoose.Schema.Types.ObjectId,
       ref: "autores",
-      required: [true, "O autor é obrigatório"]
+      required: [true, "O autor é obrigatório"],
+      autopopulate: { select: "nome" }
     },
     editora: {
       type: String,
@@ -39,6 +42,7 @@ const livroSchema = new mongoose.Schema(
   }
 );
 
+livroSchema.plugin(autopopulate);
 const livros = mongoose.model("livros", livroSchema);
 
 export default livros;

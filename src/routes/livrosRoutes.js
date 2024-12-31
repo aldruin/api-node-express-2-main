@@ -1,12 +1,12 @@
 import express from "express";
 import LivroController from "../controllers/livrosController.js";
+import paginar from "../middlewares/paginar.js";
 
 const router = express.Router();
 
 router
-  .get("/livros", LivroController.listarLivros)
-  // .get("/livros/busca", LivroController.listarLivroPorEditora)
-  .get("/livros/busca", LivroController.listarLivroPorFiltro)
+  .get("/livros", LivroController.listarLivros, paginar) // adiciona middleware paginar à rota /livros
+  .get("/livros/busca", LivroController.listarLivroPorFiltro, paginar)
   .get("/livros/:id", LivroController.listarLivroPorId)
   .post("/livros", LivroController.cadastrarLivro)
   .put("/livros/:id", LivroController.atualizarLivro)
